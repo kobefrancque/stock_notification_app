@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
 from dotenv import load_dotenv
@@ -14,7 +14,7 @@ app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 
 db = SQLAlchemy(app)
 
-class Users():
+class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
@@ -34,9 +34,9 @@ def login():
 def registration():
     registration_form = RegistrationForm()
     if request.method == 'GET':
-        return render_template('registration.html', registration_form)
+        return render_template('registration.html', registration_form=registration_form)
     elif request.method == 'POST':
-        pass
+        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     with app.app_context():
