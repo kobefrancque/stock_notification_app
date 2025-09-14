@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import os
+from forms import RegistrationForm
 
 app = Flask(__name__, template_folder='templates')
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -24,9 +25,12 @@ def index():
 def login():
     return render_template('login.html')
 
-@app.route('/registration')
+@app.route('/registration', methods=['GET', 'POST'])
 def registration():
-    return render_template('registration.html')
+    if request.method == 'GET':
+        return render_template('registration.html')
+    elif request.method == 'POST':
+        registration_form = RegistrationForm()
 
 if __name__ == '__main__':
     with app.app_context():
