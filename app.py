@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from dotenv import load_dotenv
 from forms import RegistrationForm
+from database import db, Users
 
 load_dotenv()
 
@@ -11,16 +12,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'database.db')}"
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 
-
-db = SQLAlchemy(app)
-
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False)
-    phone_number = db.Column(db.String, nullable=False)
-    sp500_alert = db.Column(db.Boolean, nullable=False)
-
+db.init_app(app)
 
 @app.route('/')
 def index():
