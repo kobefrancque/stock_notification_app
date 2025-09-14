@@ -1,11 +1,16 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import os
+from dotenv import load_dotenv
 from forms import RegistrationForm
+
+load_dotenv()
 
 app = Flask(__name__, template_folder='templates')
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'database.db')}"
+app.secret_key = os.environ.get('FLASK_SECRET_KEY')
+
 
 db = SQLAlchemy(app)
 
@@ -27,10 +32,11 @@ def login():
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
+    registration_form = RegistrationForm()
     if request.method == 'GET':
-        return render_template('registration.html')
+        return render_template('registration.html', registration_form)
     elif request.method == 'POST':
-        registration_form = RegistrationForm()
+        pass
 
 if __name__ == '__main__':
     with app.app_context():
