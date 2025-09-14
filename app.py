@@ -45,6 +45,8 @@ def registration():
             db.session.commit()
 
             return redirect(url_for('index'))
+        else:
+            return render_template('registration.html', registration_form=registration_form)  # Form validation failed - return form with errors
 
 if __name__ == '__main__':
     with app.app_context():

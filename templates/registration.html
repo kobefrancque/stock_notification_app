@@ -9,22 +9,48 @@ Registration Page
 
 <form method="post" action="{{ url_for('registration') }}">
   {{ registration_form.csrf_token }}
+
   <div class="form-group">
     {{ registration_form.username.label(class='form_label')}}
     {{ registration_form.username(class="form-control")}}
+    {% if registration_form.username.errors %}
+        <div class="invalid-feedback" style="display: block; color: red;">
+            {% for error in registration_form.username.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
   </div>
+
   <div class="form-group">
     {{ registration_form.password.label(class='form_label')}}
     {{ registration_form.password(class="form-control")}}
+    {% if registration_form.password.errors %}
+        <div class="invalid-feedback" style="display: block; color: red;">
+            {% for error in registration_form.password.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
   </div>
+
   <div class="form-group">
     {{ registration_form.phone.label(class='form_label')}}
     {{ registration_form.phone(class="form-control")}}
+    {% if registration_form.phone.errors %}
+        <div class="invalid-feedback" style="display: block; color: red;">
+            {% for error in registration_form.phone.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
   </div>
+
   <div class="form-check">
     {{ registration_form.sp500_enabled.label(class='form_label')}}
     {{ registration_form.sp500_enabled(class="form-check-input") }}
   </div>
+
     {{ registration_form.submit(class="btn btn-primary") }}
 </form>
 

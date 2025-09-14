@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length, Regexp
 
 class RegistrationForm(FlaskForm):
     username = StringField('username', validators=[DataRequired()])
-    password = PasswordField('password', validators=[DataRequired(), Length(min=8, max=20)])
+    password = PasswordField('password', validators=[DataRequired(), Length(min=8, max=20, message="Password must be between 8 and 20 characters.")])
     phone = StringField('phone', validators=[DataRequired(), Regexp(r'^\d{10}$', message="Phone number must be 10 digits.")])
     sp500_enabled = BooleanField('SP500 alerts', default=False)
     submit = SubmitField('register')
